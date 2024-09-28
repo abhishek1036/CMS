@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Buyer Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+	rel="stylesheet" 
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+	crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/buyer}">Car Management System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+<br>
+<div class="row col-md-6 offset-md-4">
+			<h1>Welcome [[${userName}]]</h1>
+</div>
+
+<br>
+<br>
+<div class="no-cars" th:if="${#lists.isEmpty(cars)}">
+<br> <br> <br>
+<h1>No Cars Available.</h1>
+<br> <br>
+</div>
+<div th:unless="${#lists.isEmpty(cars)}">
+<div class="container">
+<div class="row col-md-10">
+<h2>Car Details</h2>
+</div>
+<table class="table table-bordered table-hover">
+<thead class="table-dark">
+<tr>
+<th>Name</th>
+<th>Info</th>
+<th>Price(₹)</th>
+<th>Count</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="car : ${cars}">
+<td><b><span th:text="${car.carName}"></span></b><br>
+<small>Sold By:</small>
+<b><small th:text="${car.user.userName}"></small></b>
+</td>
+<td th:text="${car.info}"></td>
+<td th:text="${car.price}"></td>
+<td th:text="${car.count}" ></td>
+<td><a class="cart" th:href="@{/buyer/cart(id=${car.carId})}"
+id="cartlink" > <i class="material-icons">Add to Cart</i></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
